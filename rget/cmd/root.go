@@ -1,4 +1,4 @@
-// Copyright © 2019 NAME HERE <EMAIL ADDRESS>
+// Copyright © 2019 The Merkle County Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -133,6 +133,10 @@ func get(cmd *cobra.Command, args []string) {
 
 	// Step 1: Download the SHA256SUMS that is correct for the URL
 	prefix, err := rgetwellknown.SumPrefix(durl)
+	if err != nil {
+		fmt.Printf("%s\n", err)
+		os.Exit(1)
+	}
 	sumsURL := prefix + "SHA256SUMS"
 	fmt.Printf("downloading sums: %v\n", sumsURL)
 	response, err := http.Get(sumsURL)

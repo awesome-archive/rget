@@ -1,4 +1,4 @@
-// Copyright © 2019 NAME HERE <EMAIL ADDRESS>
+// Copyright © 2019 The Merkle County Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,9 +21,10 @@ import (
 	"net/url"
 	"os"
 
+	"github.com/spf13/cobra"
+
 	"go.merklecounty.com/rget/rgetgithub"
 	"go.merklecounty.com/rget/rgetwellknown"
-	"github.com/spf13/cobra"
 )
 
 // submitCmd represents the submit command
@@ -41,6 +42,10 @@ func init() {
 }
 
 func submit(cmd *cobra.Command, args []string) {
+	if len(args) != 1 {
+		cmd.Usage()
+		os.Exit(1)
+	}
 	resp, err := http.PostForm("https://"+rgetwellknown.PublicServiceHost+"/api/v1/submit", url.Values{
 		"url": {args[0]},
 	})
